@@ -2,7 +2,7 @@
 
 [![License][license-image]][license-url]
 
-atom-session-javascript is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers.
+atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers.
 
 ## Change Log
 ### v1.0.0
@@ -37,5 +37,5 @@ session.flush(null, function (results) {
 ## License
 [MIT](LICENSE)
 
-[license-image]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
+[license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: LICENSE
