@@ -101,10 +101,10 @@ window.IronSourceAtom.Session = Session;
  *    userID: "YOUR_USER_ID" // Optional, unique user ID
  * }
  *
- * var tracker = new IronSourceAtom.Tracker(options); // Init a new tracker
+ * var session = new IronSourceAtom.Session(options); // Init a new session
  * var stream = "MY_STREAM_NAME", // Your target stream name
  * var data = {id: 1, string_col: "String"} // Data that matches your DB structure
- * tracker.track(stream, data); // Start tracking and empty on the described above conditions
+ * session.track(stream, data); // Start tracking and empty on the described above conditions
  **/
 Session.prototype.track = function(stream, data) {
     var self = this;
@@ -168,14 +168,14 @@ Session.prototype.track = function(stream, data) {
 };
 
 /**
- * Flush accumulated events to ironSource Atom tracker
+ * Flush accumulated events to ironSource Atom Session
  * @param {String} targetStream - atom stream name
- * @param {trackerCallback} callback - The callback that handles the response.
+ * @param {sessionCallback} callback - The callback that handles the response.
  *
  * @example
  *
  *  // To Flush all events:
- *  tracker.flush(null, function (results) {
+ *  session.flush(null, function (results) {
  *    //returns an array of results, for example:
  *    //data is: {"a":[{key: "value"}],"b":[{key: "value"}]}
  *    //result: [{"err":"Auth Error: \"a\"","data":null,"status":401} ,{"err":null,"data":{"Status":"OK"},"status":200}]
@@ -183,9 +183,9 @@ Session.prototype.track = function(stream, data) {
  *  }); // Send accumulated data immediately
  *
  * // If you don't need the results, just do:
- * tracker.flush();
+ * session.flush();
  * // OR to flush a single stream (optional callback)
- * tracker.flush(stream);
+ * session.flush(stream);
  **/
 Session.prototype.flush = function(targetStream, callback) {
     this.tracker_.flush(targetStream, callback)
