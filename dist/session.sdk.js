@@ -1,3 +1,5 @@
+(function(window, document, undefined) {
+
 'use strict';
 // can be deleted
 function generateNumbericRandomID(length) {
@@ -83,7 +85,7 @@ function Session(options) {
     }
 }
 
-window.IronSourceAtom.Session = Session;
+window.IronSourceAtomSession = Session;
 
 /**
  * Start tracking events to ironSource Atom tracker
@@ -120,7 +122,7 @@ Session.prototype.track = function(stream, data) {
             localStorage.setItem(self.STORAGE_PREFIX_ + self.SESSION_KEY_, sessionID);
             localStorage.setItem(self.STORAGE_PREFIX_ + self.SESSION_KEY_CREATE_, currentTime);
 
-            printLog(self.TAG_, "Session ID updated: " + sessionID, this.isDebug_)
+            printLog(self.TAG_, "Session ID updated: " + sessionID, self.isDebug_)
             return sessionID;
         }
 
@@ -162,7 +164,7 @@ Session.prototype.track = function(stream, data) {
     dataContainer["sessionID"] = getSessionID_();
     dataContainer["userID"] = self.userID_ ? self.userID_ : getUserID_();
 
-    printLog(self.TAG_, "Added data to tracker: " + JSON.stringify(dataContainer), this.isDebug_)
+    printLog(self.TAG_, "Added data to tracker: " + JSON.stringify(dataContainer), self.isDebug_)
 
     self.tracker_.track(stream, data);
 };
@@ -190,3 +192,4 @@ Session.prototype.track = function(stream, data) {
 Session.prototype.flush = function(targetStream, callback) {
     this.tracker_.flush(targetStream, callback)
 };
+}(window, document));
