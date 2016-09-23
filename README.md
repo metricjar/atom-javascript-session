@@ -20,12 +20,16 @@ atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com
 
 var options = {
     endpoint: "https://track.atom-data.io/",
-    auth: "",
-    debug: true,
-    userID: "test_name"
-};
+    auth: "<YOUR_AUTH_KEY>",
+    userID: "<YOUR_UNIQUE_USER_ID>",
+    flushInterval: 30, // Data sending interval
+    bulkLen: 20, // Number of records in each bulk request
+    bulkSize: 40, // The maximum bulk size in KB.
+    sessionLifeTime: 2 * 1000, // Session ID life time
+    debug: true // Enable print debug information
+  };
 
-var session = new IronSourceAtom.Session(options); 
+var session = new IronSourceAtomSession(options);
 
 session.track("test", "{\"test\": \"test1\"}")
 
