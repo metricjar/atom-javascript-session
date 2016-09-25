@@ -2,9 +2,19 @@
 
 [![License][license-image]][license-url]
 
-atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers.
+atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers (with session support).
+
+## Note
+Please include the [atom js sdk](https://github.com/ironSource/atom-javascript) before this one in order to enable tracker functionality
 
 ## Change Log
+### V1.1.0
+- Fixing bug in user_id storage
+- Fixing bug in session_id not sent
+- Updating JS DOC
+- Adding Support for custom sessionID & custom sessionLastActiv time
+- Refactoring track function
+
 ### v1.0.0
 - Basic features: 
     - sessionID & userID added to all events
@@ -16,23 +26,23 @@ atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com
 ```js
 "use strict";
 
-// Need to include Atom SDK
-
+// NOTE: ATOM SDK MUST BE INCLUDED BEFORE THE SESSION SDK
+// All of the following are optional
 var options = {
     endpoint: "https://track.atom-data.io/",
-    auth: "<YOUR_AUTH_KEY>",
-    userID: "<YOUR_UNIQUE_USER_ID>",
-    flushInterval: 30, // Data sending interval
-    bulkLen: 20, // Number of records in each bulk request
-    bulkSize: 40, // The maximum bulk size in KB.
-    sessionLifeTime: 2 * 1000, // Session ID life time
-    debug: true // Enable print debug information
-  };
+    auth: "YOUR_AUTH_KEY",      // Auth Key (optional)
+    userID: "abc123",           // Custom userID (optional)
+    sessionID: "def456",        // Custom sessionID (optional)
+    flushInterval: 30,          // Data sending interval
+    bulkLen: 20,                // Number of records in each bulk request
+    bulkSize: 40,               // The maximum bulk size in KB.
+    sessionLifeTime: 60 * 1000, // Session ID life time in MS.
+    debug: true                 // Enable print debug information
+};
 
 var session = new IronSourceAtomSession(options);
-
-session.track(<STREAM_NAME>, "{\"action\": \"login\"}")
-
+var data = {id: 1, string_col: "String"}; // Data that matches your DB structure
+session.track("STREAM NAME:, data);
 session.flush(null, function (results) { // Optional on-demand flush
     console.log(results)
 })
