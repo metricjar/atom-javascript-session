@@ -31,9 +31,9 @@ var options = {
 
 var session = new IronSourceAtomSession(options);
 
-session.track("test", "{\"test\": \"test1\"}")
+session.track(<STREAM_NAME>, "{\"action\": \"login\"}")
 
-session.flush(null, function (results) {
+session.flush(null, function (results) { // Optional on-demand flush
     console.log(results)
 })
 ```
