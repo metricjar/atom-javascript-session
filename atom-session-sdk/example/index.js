@@ -3,12 +3,13 @@
 window.ironSourceAtomInit = function () {
   var options = {
     endpoint: "https://track.atom-data.io/",
-    auth: "<YOUR_AUTH_KEY>",
-    userID: "<YOUR_UNIQUE_USER_ID>",
+    auth: "YOUR_AUTH_KEY",
+    userID: "abc123",
+    sessionID: "def456", // Custom sessionID
     flushInterval: 30, // Data sending interval
     bulkLen: 20, // Number of records in each bulk request
     bulkSize: 40, // The maximum bulk size in KB.
-    sessionLifeTime: 2 * 1000, // Session ID life time
+    sessionLifeTime: 60 * 1000, // Session ID life time
     debug: true // Enable print debug information
   };
 

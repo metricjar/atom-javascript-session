@@ -393,7 +393,6 @@ function Tracker(params) {
   //Flush everything every {flushInterval} seconds
   if (!this.timer) {
     this.timer = setInterval(function () {
-      console.log("from tracker flush!" + self.accumulated["test"]);
       self.flush();
     }, this.params.flushInterval);
   }
@@ -434,13 +433,9 @@ Tracker.prototype.track = function (stream, data) {
     throw new Error('Stream name and data are required parameters');
   }
 
-  console.log("from tracker: " + stream)
-
   // Init the stream backlog (stream -> [data array])
   if (!(stream in self.accumulated)) {
     self.accumulated[stream] = [];
-
-    console.log("ss: " + stream)
   }
 
   // Store the data as an array of strings
@@ -454,9 +449,6 @@ Tracker.prototype.track = function (stream, data) {
   } else {
     self.accumulated[stream].push(data);
   }
-
-  console.log(self.accumulated[stream][0]);
-
 
   // Flush on a certain bulk length or bulk size (in bytes)
   if (self.accumulated[stream].length >= self.params.bulkLen
@@ -489,7 +481,6 @@ Tracker.prototype.track = function (stream, data) {
 Tracker.prototype.flush = function (targetStream, callback) {
   var self = this;
   var timeout = this.retryTimeout;
-  console.log("Target stream 1: " + self.retryTimeout);
 
 
   if (!callback) {
@@ -500,19 +491,14 @@ Tracker.prototype.flush = function (targetStream, callback) {
 
   var tasks = [];
 
-  //console.log("Target stream: " + targetStream);
-
   if (targetStream) {
-    console.log("Target stream 1: " + targetStream);
     if (self.accumulated[targetStream].length >= 1) {
       tasks.push(function (taskCb) {
         _send(targetStream, self.accumulated[targetStream], timeout, taskCb, true);
       });
     }
   } else {
-    console.log(self.accumulated);
     for (var stream in self.accumulated) {
-      console.log("data " + stream);
 
       if (self.accumulated[stream].length >= 1) {
         // The IIFE is here to create a separate scope so we don't get the stream as closure from the upper func.
@@ -535,8 +521,6 @@ Tracker.prototype.flush = function (targetStream, callback) {
       firstRun = false;
     }
 
-    console.log("Send data: " + sendData)
-
     // check return
     return self.atom.putEvents({"stream": sendStream, "data": sendData}, function (err, data, status) {
       if (err != null && status >= 500) {
@@ -552,8 +536,6 @@ Tracker.prototype.flush = function (targetStream, callback) {
           return callback('Timeout - No response from server', null, 408);
         }
       }
-
-      console.log("Response data1111: " + status)
       return callback(err, data, status);
     })
   }

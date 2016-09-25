@@ -1,42 +1,30 @@
 (function(window, document, undefined) {
 
 'use strict';
-// can be deleted
-function generateNumbericRandomID(length) {
-    var idLength = length ? length : 32;
-    var sessionID = "";
-    var possible = "0123456789";
-
-    for (var index = 0; index < idLength; index++) {
-        sessionID += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return sessionID
-}
 
 /**
  * Generate random ID UUID-4
- * @param {Number} length - length for generated ID
+ * @param {Number} [length=32] - length for generated ID
  **/
 function generateRandomID(length) {
-    var idLength = length ? length : 32;
+  var idLength = length ? length : 32;
 
-    var uuid = "";
-    for (var index = 0; index < idLength; index++) {
-        switch (index) {
-            case 8:
-            case 20:
-                uuid += (Math.random() * 16 | 0).toString(16);
-                break;
-            case 16:
-                uuid += (Math.random() * 4 | 8).toString(16);
-                break;
-            default:
-                uuid += (Math.random() * 16 | 0).toString(16);
-        }
+  var uuid = "";
+  for (var index = 0; index < idLength; index++) {
+    switch (index) {
+      case 8:
+      case 20:
+        uuid += (Math.random() * 16 | 0).toString(16);
+        break;
+      case 16:
+        uuid += (Math.random() * 4 | 8).toString(16);
+        break;
+      default:
+        uuid += (Math.random() * 16 | 0).toString(16);
     }
-    return uuid;
-};
+  }
+  return uuid;
+}
 
 /**
  * Print debug information
@@ -45,44 +33,74 @@ function generateRandomID(length) {
  * @param {Boolean} isDebug - Enable print debug information
  **/
 function printLog(tag, logData, isDebug) {
-    if (isDebug) {
-        console.log(tag + ": " + logData);
-    }
+  if (isDebug) {
+    console.log(tag + ": " + logData);
+  }
 }
 
 /**
- * This class implements a Atom Session 
+ * This class implements a Atom Session
  * @param {Object} options
+ * @param {String} [options.userID] - Custom User ID UUID-4
+ * @param {String} [options.sessionID] - Custom Session ID UUID-4
+ * @param {Boolean} [options.isDebug] - Enable debug printing
+ * @param {Number} [options.sessionLastActive] - Custom Session Last Active Time (Unix time)
+ * @param {Number} [options.sessionLifeTime=30 minutes] - Session life time in milliseconds
+ *
+ * Optional for ISAtom main object:
  * @param {Number} [options.flushInterval=30 seconds] - Data sending interval
  * @param {Number} [options.bulkLen=20] - Number of records in each bulk request
  * @param {Number} [options.bulkSize=40KB] - The maximum bulk size in KB.
- *
- * Optional for ISAtom main object:
  * @param {String} [options.endpoint] - Endpoint api url
  * @param {String} [options.auth] - Key for hmac authentication
  * @param {String} [options.userID] - Unique user ID
  * @param {Boolean} [options.debug] - Enable print debug information
- * @param {Number} [options.sessionLifeTime] - Session life time
+ * @param {String} [options.sdkVersion] - Atom SDK Version
+ * @param {String} [options.sdkType] - Atom SDK Type
+ *
  * @constructor
  **/
 function Session(options) {
-    this.TAG_ = "IronSourceAtomSession"
+  this.TAG_ = "ISA-Session";
 
-    this.STORAGE_PREFIX_ = "ATOM_SESSION_";
-    this.SESSION_KEY_ = "SESSION_ID";
-    this.SESSION_KEY_CREATE_ = "SESSION_START_TIME";
+  var SDK_VERSION = "1.1.0";
+  var SDK_TYPE = "atom-js-session";
 
-    options = options || {};
-    this.userID_ = options.userID;
-    this.isDebug_ = options.debug;
+  // Local storage keys
+  this.STORAGE_PREFIX = "ATOM_SESSION_";
+  this.SESSION_KEY = "SESSION_ID";
+  this.SESSION_LAST_ACTIVE = "SESSION_LAST_ACTIVE";
+  this.USER_ID = "USER_ID";
 
+  options = options || {};
+  this.userID = options.userID;
+  this.sessionID = options.sessionID;
+  this.sessionLastActive = options.sessionLastActive || Date.now();
+  this.isDebug = options.debug || false;
+
+  if (window.IronSourceAtom) {
+    options.sdkVersion = SDK_VERSION;
+    options.sdkType = SDK_TYPE;
     this.tracker_ = new IronSourceAtom.Tracker(options);
-    this.sessionLifeTime_ = options.sessionLifeTime ? options.sessionLifeTime : 30 * 60 * 1000;
+  } else {
+    throw new Error("Please include the ironSource Atom SDK in order to use the session sdk");
+  }
 
-    if (this.userID_) {
-        printLog(this.TAG_, "User added: " + this.userID_, this.isDebug_)
-        localStorage.setItem(this.STORAGE_PREFIX_ + this.USER_KEY_, this.userID_);
-    }
+  this.sessionLifeTime_ = options.sessionLifeTime ? options.sessionLifeTime : 30 * 60 * 1000;
+
+  // Set custom userID, sessionID and start time.
+  if (this.userID) {
+    printLog(this.TAG_, "UserID added: " + this.userID, this.isDebug);
+    localStorage.setItem(this.STORAGE_PREFIX + this.USER_ID, this.userID);
+  }
+
+  if (this.sessionID) {
+    printLog(this.TAG_, "Session added: " + this.sessionID, this.isDebug);
+    printLog(this.TAG_, "Session Last Active: " + this.sessionLastActive, this.isDebug);
+    localStorage.setItem(this.STORAGE_PREFIX + this.SESSION_KEY, this.sessionID);
+    localStorage.setItem(this.STORAGE_PREFIX + this.SESSION_LAST_ACTIVE, this.sessionLastActive);
+  }
+
 }
 
 window.IronSourceAtomSession = Session;
@@ -108,65 +126,58 @@ window.IronSourceAtomSession = Session;
  * var data = {id: 1, string_col: "String"} // Data that matches your DB structure
  * session.track(stream, data); // Start tracking and empty on the described above conditions
  **/
-Session.prototype.track = function(stream, data) {
-    var self = this;
+Session.prototype.track = function (stream, data) {
+  var self = this;
 
-    function getSessionID_() {
-        var sessionID = localStorage.getItem(self.STORAGE_PREFIX_ + self.SESSION_KEY_);
-        var sessionStartTime = localStorage.getItem(self.STORAGE_PREFIX_ + self.SESSION_KEY_CREATE_);
+  function getSessionID_() {
+    var sessionID = localStorage.getItem(self.STORAGE_PREFIX + self.SESSION_KEY);
+    var sessionLastActive = localStorage.getItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE);
+    var currentTime = Date.now();
 
-        var currentTime = Date.now();
+    printLog(self.TAG, "SessionID: " + sessionID, self.isDebug);
+    printLog(self.TAG, "SessionLastActive: " + sessionLastActive, self.isDebug);
+    printLog(self.TAG, "SessionLifeTime:"  + self.sessionLifeTime_, self.isDebug);
+    if (!sessionID || (currentTime - sessionLastActive) >= self.sessionLifeTime_) {
+      console.log("test");
+      sessionID = generateRandomID();
+      localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_KEY, sessionID);
+      localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE, currentTime);
 
-        function updateSessionID_() {
-            sessionID = generateRandomID()
-            localStorage.setItem(self.STORAGE_PREFIX_ + self.SESSION_KEY_, sessionID);
-            localStorage.setItem(self.STORAGE_PREFIX_ + self.SESSION_KEY_CREATE_, currentTime);
-
-            printLog(self.TAG_, "Session ID updated: " + sessionID, self.isDebug_)
-            return sessionID;
-        }
-
-        if (!sessionID) {
-            return updateSessionID_();
-        }
-
-        if ((currentTime - sessionStartTime) >= self.sessionLifeTime_) {
-            return updateSessionID_();
-        }
-
-        // update session time
-        localStorage.setItem(self.STORAGE_PREFIX_ + self.SESSION_KEY_CREATE_, currentTime);
-        return sessionID;
+      printLog(self.TAG_, "Session ID updated: " + sessionID, self.isDebug);
+      return sessionID;
     }
 
-    var dataContainer = {}
-    if ((typeof data !== 'string' && !(data instanceof String))) {
-        dataContainer = data;
-    } else {
-        try {
-            dataContainer = JSON.parse(data);
-        } catch (e) {
-            /* istanbul ignore next */
-            throw new Error("Invalid JSON String - can't be converted to Object", e);
-        }
+    // Update session time
+    localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE, currentTime);
+    return sessionID;
+  }
+
+  var dataContainer = {};
+  if ((typeof data !== 'string' && !(data instanceof String))) {
+    dataContainer = data;
+  } else {
+    try {
+      dataContainer = JSON.parse(data);
+    } catch (e) {
+      throw new Error("Invalid JSON String - can't be converted to Object", e);
     }
+  }
 
-    function getUserID_() {
-        var userID = localStorage.getItem(self.STORAGE_PREFIX_ + self.USER_KEY_);
-        if (!userID) {
-            userID = generateRandomID();
-            localStorage.setItem(self.STORAGE_PREFIX_ + self.USER_KEY_, userID);
-        }
-
-        return userID;
+  function getUserID_() {
+    var userID = localStorage.getItem(self.STORAGE_PREFIX + self.USER_ID);
+    if (!userID) {
+      userID = generateRandomID();
+      localStorage.setItem(self.STORAGE_PREFIX + self.USER_ID, userID);
     }
+    return userID;
+  }
 
-    dataContainer["sessionID"] = getSessionID_();
-    dataContainer["userID"] = self.userID_ ? self.userID_ : getUserID_();
+  dataContainer["ib_sessionid"] = getSessionID_();
+  dataContainer["ib_userid"] = getUserID_();
 
-    printLog(self.TAG_, "Added data to tracker: " + JSON.stringify(dataContainer), self.isDebug_)
+  printLog(self.TAG_, "Added data to tracker: " + JSON.stringify(dataContainer), self.isDebug);
 
-    self.tracker_.track(stream, data);
+  self.tracker_.track(stream, dataContainer);
 };
 
 /**
@@ -189,7 +200,7 @@ Session.prototype.track = function(stream, data) {
  * // OR to flush a single stream (optional callback)
  * session.flush(stream);
  **/
-Session.prototype.flush = function(targetStream, callback) {
-    this.tracker_.flush(targetStream, callback)
+Session.prototype.flush = function (targetStream, callback) {
+  this.tracker_.flush(targetStream, callback)
 };
 }(window, document));
