@@ -136,7 +136,6 @@ Session.prototype.track = function (stream, data) {
     printLog(self.TAG, "SessionLastActive: " + sessionLastActive, self.isDebug);
     printLog(self.TAG, "SessionLifeTime:"  + self.sessionLifeTime_, self.isDebug);
     if (!sessionID || (currentTime - sessionLastActive) >= self.sessionLifeTime_) {
-      console.log("test");
       sessionID = generateRandomID();
       localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_KEY, sessionID);
       localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE, currentTime);
