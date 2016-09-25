@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example page for IronSource Atom JS SDK</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <header class="page-header">
+        <h1 class="text-center">Example for IronSource Atom JS Session SDK</h1>
+    </header>
+    <section class="row">
+        <div class="col-md-9">
+            <h1>Test Session API</h1>
+            <h2>Session</h2>
+        </div>
+        <div class="col-md-3">
+            <label for="auth-key">Your Stream auth key</label>
+            <input type="text" id="auth-key" class="form-control" placeholder="Enter stream auth key">
+        </div>
+        <div class="col-md-5">
+            <label for="session-stream">Session Stream Name</label>
+            <input type="text" id="session-stream" class="form-control" placeholder="Enter stream name">
+            <label for="session-data">Session data</label>
+            <input type="text" id="session-data" class="form-control" placeholder='Enter data {"key": "value"}'>
+            <br>
+            <button id="session-clear" class="btn btn-success">Clear Input</button>
+            <button id="generate-session-data" class="btn btn-primary">Generate & Track Data</button>
+            <button id="session-btn" class="btn btn-primary">Track</button>
+            <button id="session-flush" class="btn btn-success">Flush</button>
+        </div>
+        <div class="col-md-7">
+            <label for="session-batch">Accumulated Session data</label>
+            <pre id="session-batch"></pre>
+            <label for="session-result">Result</label>
+            <pre id="session-result"></pre>
+        </div>
+    </section>
+</div>
+<!-- In order to use Async loading you need to wrap your code with the init function -->
+<!-- window.ironSourceAtomInit = function() { -->
+<!-- // ... code -->
+<!-- } -->
+<script type="text/javascript">
+    (function () {
+        var isa = document.createElement('script');
+        isa.type = 'text/javascript';
+        isa.async = true;
+        isa.src = 'sdk.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(isa);
+    })();
+</script>
+
+<!--Synced loading-->
+
+<!--From cdn-->
+<!--<script src="https://js-sdk.atom-data.io/1.1.1/sdk.min.js"></script>-->
+
+<!--From localhost-->
+<script src="../../dist/session.sdk.js"></script>
+<script src="index.js"></script>
+
+</body>
+</html>
