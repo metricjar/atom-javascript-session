@@ -42,7 +42,7 @@ var options = {
 
 var session = new IronSourceAtomSession(options);
 var data = {id: 1, string_col: "String"}; // Data that matches your DB structure
-session.track("STREAM NAME:, data);
+session.track("STREAM NAME", data);
 session.flush(null, function (results) { // Optional on-demand flush
     console.log(results)
 })
