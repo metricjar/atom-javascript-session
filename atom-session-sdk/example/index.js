@@ -4,17 +4,11 @@ window.ironSourceAtomInit = function () {
   var options = {
     endpoint: "https://track.atom-data.io/",
     auth: "YOUR_AUTH_KEY",      // Auth Key
-    userID: "abc123",           // Custom userID
-    sessionID: "def456",        // Custom sessionID
-    flushInterval: 30,          // Data sending interval
-    bulkLen: 20,                // Number of records in each bulk request
-    bulkSize: 40,               // The maximum bulk size in KB.
-    sessionLifeTime: 60 * 1000, // Session ID life time
     debug: true                 // Enable print debug information
   };
 
   var stream = "";
-  var session = new IronSourceAtomSession(options);
+  var atomSession = new IronSourceAtomSession(options);
 
   var sessionAdd = document.getElementById("session-btn"),
     sessionFlush = document.getElementById("session-flush"),
@@ -23,19 +17,41 @@ window.ironSourceAtomInit = function () {
   var authKey = document.getElementById("auth-key"),
     sessionStream = document.getElementById("session-stream"),
     sessionData = document.getElementById("session-data"),
+    sessionCUserID = document.getElementById("session-userid"),
+    sessionCSessionID = document.getElementById("session-sessionid"),
+    sessionCLifeTime = document.getElementById("session-lifetime"),
     sessionBatch = document.getElementById("session-batch"),
     sessionResult = document.getElementById("session-result"),
     generateSessionData = document.getElementById('generate-session-data');
 
+  // Auth
   authKey.addEventListener('blur', function () {
     options.auth = authKey.value;
-    session = new IronSourceAtomSession(options);
+    atomSession = new IronSourceAtomSession(options);
+  });
+
+  // Session Custom User ID
+  sessionCUserID.addEventListener('blur', function () {
+    options.userID = sessionCUserID.value;
+    atomSession = new IronSourceAtomSession(options);
+  });
+
+  // Session Custom User ID
+  sessionCSessionID.addEventListener('blur', function () {
+    options.sessionID = sessionCSessionID.value;
+    atomSession = new IronSourceAtomSession(options);
+  });
+
+  // Session Custom User ID
+  sessionCLifeTime.addEventListener('blur', function () {
+    options.sessionLifeTime = sessionCLifeTime.value;
+    atomSession = new IronSourceAtomSession(options);
   });
 
   // Tracker
   sessionAdd.addEventListener("click", function () {
     try {
-      session.track(sessionStream.value, sessionData.value);
+      atomSession.track(sessionStream.value, sessionData.value);
     } catch (e) {
       sessionResult.innerHTML = e;
       return;
@@ -55,7 +71,7 @@ window.ironSourceAtomInit = function () {
         ts: new Date()
       };
       try {
-        session.track(sessionStream.value, genData);
+        atomSession.track(sessionStream.value, genData);
       } catch (e) {
         sessionResult.innerHTML = e;
         return;
@@ -64,9 +80,8 @@ window.ironSourceAtomInit = function () {
     updateBatch();
   });
 
-
   sessionFlush.addEventListener("click", function () {
-    session.flush(null, function (results) {
+    atomSession.flush(null, function (results) {
       var output = '[\n';
       results.forEach(function (result) {
         output += JSON.stringify(result) + '\n';
@@ -82,8 +97,8 @@ window.ironSourceAtomInit = function () {
 
   function updateBatch() {
     var output = '';
-    for (stream in session.tracker_.accumulated) {
-      var data = session.tracker_.accumulated[stream];
+    for (stream in atomSession.tracker_.accumulated) {
+      var data = atomSession.tracker_.accumulated[stream];
       output += 'Stream ' + stream + ': \n' + data.join(',\n') + '\n';
     }
     sessionBatch.innerHTML = output;
@@ -92,5 +107,14 @@ window.ironSourceAtomInit = function () {
   function clearSessionInputs() {
     sessionStream.value = "";
     sessionData.value = "";
+    sessionCLifeTime.value = "";
+    sessionCSessionID.value = "";
+    sessionCUserID.value = "";
+    options = {};
+    options.debug = true;
+    for (stream in atomSession.tracker_.accumulated) {
+      atomSession.tracker_.accumulated[stream] = [];
+    }
+    updateBatch();
   }
 };

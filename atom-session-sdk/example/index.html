@@ -10,11 +10,10 @@
 <div class="container">
     <header class="page-header">
         <h1 class="text-center">Example for IronSource Atom JS Session SDK</h1>
-    </header>session-btn
+    </header>
     <section class="row">
         <div class="col-md-9">
-            <h1>Test Session API</h1>
-            <h2>Session</h2>
+            <h2>Session Payload</h2>
         </div>
         <div class="col-md-3">
             <label for="auth-key">Your Stream auth key</label>
@@ -25,8 +24,16 @@
             <input type="text" id="session-stream" class="form-control" placeholder="Enter stream name">
             <label for="session-data">Session data</label>
             <input type="text" id="session-data" class="form-control" placeholder='Enter data {"key": "value"}'>
+            <label for="session-userid">Session Custom UserID (Optional)</label>
+            <input type="text" id="session-userid" class="form-control" placeholder="Enter session custom user id">
+            <label for="session-sessionid">Session Custom SessionID (Optional)</label>
+            <input type="text" id="session-sessionid" class="form-control"
+                   placeholder='Enter session custom session id'>
+            <label for="session-lifetime">Session Lifetime (Optional)</label>
+            <input type="text" id="session-lifetime" class="form-control" placeholder="Enter session lifetime">
+
             <br>
-            <button id="session-clear" class="btn btn-success">Clear Input</button>
+            <button id="session-clear" class="btn btn-success">Clear Data & Input</button>
             <button id="generate-session-data" class="btn btn-primary">Generate & Track Data</button>
             <button id="session-btn" class="btn btn-primary">Track</button>
             <button id="session-flush" class="btn btn-success">Flush</button>
@@ -48,15 +55,10 @@
         var isa = document.createElement('script');
         isa.type = 'text/javascript';
         isa.async = true;
-        isa.src = 'sdk.js';
+        isa.src = 'https://js-sdk.atom-data.io/1.5.0/sdk.min.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(isa);
     })();
 </script>
-
-<!--Synced loading-->
-
-<!--From cdn-->
-<!--<script src="https://js-sdk.atom-data.io/1.1.1/sdk.min.js"></script>-->
 
 <!--From localhost-->
 <script src="../../dist/session.sdk.js"></script>
