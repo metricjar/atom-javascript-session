@@ -1,0 +1,25 @@
+{
+  "name": "atom-javascript-session",
+  "version": "1.1.0",
+  "homepage": "https://github.com/ironSource/atom-javascript-session",
+  "main": "dist/session.sdk.js",
+  "keywords": [
+    "IronSource",
+    "Atom",
+    "JS",
+    "SDK",
+    "tracking",
+    "sdk",
+    "IS",
+    "Atom",
+    "Session"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
