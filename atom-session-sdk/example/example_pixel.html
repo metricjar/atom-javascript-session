@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/html">
+<h1>Atom Session Pixel Example</h1>
+<script src="../src/atom-pixel.js"></script>
+
+<script type="application/javascript">
+    "use strict";
+    // Replace the url with the server that hosts the track.html
+    var track = trackerFactory("http://example-url.com:8080/track.html");
+    track("hi", {"1": 2});
+</script>
+
+</html>

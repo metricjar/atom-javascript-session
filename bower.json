@@ -1,6 +1,6 @@
 {
-  "name": "atom-javascript-session",
-  "version": "1.1.1",
+  "name": "atom-sdk-js-session",
+  "version": "1.1.2",
   "homepage": "https://github.com/ironSource/atom-javascript-session",
   "main": "dist/session.sdk.js",
   "keywords": [
@@ -15,6 +15,10 @@
     "Session"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ironSource/atom-javascript-session"
+  },
   "ignore": [
     "**/.*",
     "node_modules",

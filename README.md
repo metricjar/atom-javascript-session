@@ -69,6 +69,9 @@ session.flush(null, function (results) { // Optional on-demand flush
 
 ## Change Log
 
+### V1.1.2
+- Added pixel tracking code + example
+
 ### V1.1.1
 - Improved example
 - Improved README
