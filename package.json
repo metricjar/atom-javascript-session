@@ -1,6 +1,6 @@
 {
-  "name": "atom-javascript-session",
-  "version": "1.1.1",
+  "name": "atom-sdk-js-session",
+  "version": "1.1.2",
   "description": "IronSource Atom JS SDK with session support",
   "main": "dist/session.sdk.js",
   "devDependencies": {

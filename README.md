@@ -19,7 +19,7 @@ atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com
 ### Installation with Bower
 
 ```sh
-$ bower install --save atom-js-sdk-session
+$ bower install --save atom-sdk-js-session
 ```
 
 ```html
