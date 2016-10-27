@@ -1,3 +1,5 @@
+(function(window, document, undefined) {
+
 "use strict";
 
 /**
@@ -23,3 +25,4 @@ function IronSourceAtomTrackerFactory(trackUrl) {
 }
 
 window.IronSourceAtomTrackerFactory = IronSourceAtomTrackerFactory;
+}(window, document));

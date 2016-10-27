@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * This class implements a Atom Session
+ * This class implements an Atom Session
  * @param {Object} options
  * @param {String} [options.userID] - Custom User ID UUID-4
  * @param {String} [options.sessionID] - Custom Session ID UUID-4
