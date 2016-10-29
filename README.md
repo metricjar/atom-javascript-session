@@ -3,7 +3,7 @@
 [![License][license-image]][license-url]
 [![Docs][docs-image]][docs-url]
 
-atom-javascript is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers.
+atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers (with session support).
 
 - [Signup](https://atom.ironsrc.com/#/signup)
 - [Documentation][docs-url]
@@ -11,8 +11,6 @@ atom-javascript is the official [ironSource.atom](http://www.ironsrc.com/data-fl
 - [Usage](#usage)
 - [Change Log](#change-log)
 - [Example](#example)
-
-atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers (with session support).
 
 ## Installation
 
@@ -23,7 +21,7 @@ $ bower install --save atom-sdk-js-session
 ```
 
 ```html
-<script src="bower_components/atom-js-sdk-session/dist/session.sdk.min.js"></script>
+<script src="bower_components/atom-sdk-js-session/dist/session.sdk.min.js"></script>
 ```
 
 ### Installation with Atom CDN
