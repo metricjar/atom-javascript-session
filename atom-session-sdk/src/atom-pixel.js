@@ -76,6 +76,9 @@ if(!trackerInited()){
     atomIframe.src = TrackerPixel.currentTracker + '?stream=' + encodeURIComponent(stream) + '&data=' + encodeURIComponent(data);
     atomIframe.height = "0px";
     atomIframe.width = "0px";
+    atomIframe.addEventListener("flushed", function(){
+      document.body.removeChild(atomIframe);
+    })
     document.body.appendChild(atomIframe);
   };
 
@@ -85,10 +88,9 @@ if(!trackerInited()){
     var eventQueue = w.ISTrackerPixel.q;
 
     if (eventQueue.length > 0) {
-      console.log("Flush queued events!");
-      for (var index in eventQueue) {
-        TrackerPixel.apply(TrackerPixel, eventQueue[index]);
-      }
+      eventQueue.forEach(function(elem){
+        TrackerPixel.apply(TrackerPixel, elem);
+      })
     }
   }
   w.ISTrackerPixel = TrackerPixel;

@@ -34,7 +34,7 @@ For example:
 OR
 <script src="https://js-sdk.atom-data.io/session/1.1.1/session.sdk.min.js"></script>
 
-The CDN supports both HTTP and HTTPS 
+The CDN supports both HTTP and HTTPS
 ```
 
 ### Note
@@ -67,6 +67,10 @@ session.flush(null, function (results) { // Optional on-demand flush
 
 ## Change Log
 
+### V1.1.6
+- Fixed flush process - queue iteration errors
+- Added pixel cleanup
+
 ### V1.1.2
 - Added pixel tracking code + example
 
@@ -85,7 +89,7 @@ session.flush(null, function (results) { // Optional on-demand flush
 - Refactoring track function
 
 ### v1.0.0
-- Basic features: 
+- Basic features:
     - sessionID & userID added to all events
     - sessionID generate randomly
     - userID generate randomly (if not set)
