@@ -28,11 +28,13 @@ $ bower install --save atom-sdk-js-session
 ```html
 To install a certain version just do:
 <script src="https://js-sdk.atom-data.io/session/{VERSION_NUMBER_HERE}/session.sdk.min.js"></script>
+OR for the latest version:
+<script src="https://js-sdk.atom-data.io/session/latest/session.sdk.min.js"></script>
 
 For example:
-<script src="https://js-sdk.atom-data.io/session/1.1.1/session.sdk.js"></script>
+<script src="https://js-sdk.atom-data.io/session/1.1.6/session.sdk.js"></script>
 OR
-<script src="https://js-sdk.atom-data.io/session/1.1.1/session.sdk.min.js"></script>
+<script src="https://js-sdk.atom-data.io/session/1.1.6/session.sdk.min.js"></script>
 
 The CDN supports both HTTP and HTTPS
 ```

@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/html">
+<h1>Atom Session Pixel Example</h1>
+<!--<script src="../src/atom-pixel.js"></script> -->
+
+<script type="application/javascript">
+    "use strict";
+
+    var atomPixelSrcript = '../../src/atom-pixel.js';
+
+    (function (windowObject, element, elementType, scriptUrl, trackerPixelFunc, a, m) {
+        // Save data until script loads
+        windowObject[trackerPixelFunc] = windowObject[trackerPixelFunc] || function () {
+                    (windowObject[trackerPixelFunc].q = windowObject[trackerPixelFunc].q || []).push(arguments);
+                };
+        a = element.createElement(elementType), m = element.getElementsByTagName(elementType)[0];
+        a.async = 1;
+        a.src = scriptUrl;
+        m.parentNode.insertBefore(a, m);
+    })(window, document, 'script', atomPixelSrcript, 'ISTrackerPixel');
+
+    try {
+
+        /*
+         To create an Atom pixel tracker:
+         ISTrackerPixel('create', URL/track.html, TRACKER_ALIAS)
+         */
+
+        ISTrackerPixel('create', 'http://example-url.com:1111/track.html', 'tracker1');
+        ISTrackerPixel('create', 'http://example-url.com:2222/track.html', 'tracker2');
+        ISTrackerPixel('create', 'http://example-url.com:3333/track.html', 'tracker3');
+
+        /*
+         To Use the created tracker:
+         ISTrackerPixel('use', 'TRACKER_NAME');
+         To send Data:
+         ISTrackerPixel('send', {"YOUR": "DATA"});
+         * */
+
+        ISTrackerPixel('send', 'hi', {"2": 3});
+        ISTrackerPixel('use', 'tracker1');
+        ISTrackerPixel('send', 'hi', {"2": 3});
+
+        ISTrackerPixel('use', 'tracker3');
+        ISTrackerPixel('send', 'hi', {"2": 3});
+
+        setTimeout(function () {
+            ISTrackerPixel('use', 'tracker2');
+            ISTrackerPixel('send', 'hi2222222', {"2": 3});
+        }, 2000);
+    } catch (e) {
+        console.log(e.message);
+    }
+</script>
+
+</html>

@@ -2,24 +2,24 @@
 
 "use strict";
 
-function trackerInited(){
+function trackerInited() {
   // Check if main pixelTracker has underlying trackers
   return typeof window.ISTrackerPixel.trackers !== 'undefined';
 }
 
-if(!trackerInited()){
+if (!trackerInited()) {
   function ISTrackerPixelException(message) {
-     this.message = message;
-     this.name = "ISTrackerPixelException";
+    this.message = message;
+    this.name = "ISTrackerPixelException";
   }
 
   function TrackerPixel() {
     TrackerPixel.trackers = TrackerPixel.trackers || {};
     TrackerPixel.methods = TrackerPixel.methods || {
-      'create': craeteTracker,
-      'use': useTracker,
-      'send': sendData
-    };
+        'create': craeteTracker,
+        'use': useTracker,
+        'send': sendData
+      };
 
     var method = arguments[0];
 
@@ -78,6 +78,9 @@ if(!trackerInited()){
     atomIframe.src = TrackerPixel.currentTracker + '?stream=' + encodeURIComponent(stream) + '&data=' + encodeURIComponent(data);
     atomIframe.height = "0px";
     atomIframe.width = "0px";
+    atomIframe.addEventListener("flushed", function () {
+      document.body.removeChild(atomIframe);
+    });
     document.body.appendChild(atomIframe);
   };
 
@@ -87,10 +90,9 @@ if(!trackerInited()){
     var eventQueue = w.ISTrackerPixel.q;
 
     if (eventQueue.length > 0) {
-      console.log("Flush queued events!");
-      for (var index in eventQueue) {
-        TrackerPixel.apply(TrackerPixel, eventQueue[index]);
-      }
+      eventQueue.forEach(function (elem) {
+        TrackerPixel.apply(TrackerPixel, elem);
+      })
     }
   }
   w.ISTrackerPixel = TrackerPixel;
