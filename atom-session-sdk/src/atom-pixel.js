@@ -76,9 +76,7 @@ if (!trackerInited()) {
     atomIframe.src = TrackerPixel.currentTracker + '?stream=' + encodeURIComponent(stream) + '&data=' + encodeURIComponent(data);
     atomIframe.height = "0px";
     atomIframe.width = "0px";
-    atomIframe.addEventListener("flushed", function () {
-      document.body.removeChild(atomIframe);
-    });
+    atomIframe.style = "display:none";
     document.body.appendChild(atomIframe);
   };
 
