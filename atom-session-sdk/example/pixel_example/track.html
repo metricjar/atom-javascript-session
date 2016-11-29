@@ -30,9 +30,6 @@
     var stream = getParameterByName("stream");
     session.track(stream, data);
 
-    session.flush(null, function (results) {
-        var event = new Event('flushed');
-        window.frameElement.dispatchEvent(event)
-    });
+    session.flush();
 </script>
 </html>
