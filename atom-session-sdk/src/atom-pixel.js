@@ -2,7 +2,10 @@
 
 function trackerInited() {
   // Check if main pixelTracker has underlying trackers
-  return typeof window.ISTrackerPixel.trackers !== 'undefined';
+  if (window.ISTrackerPixel) {
+    return typeof window.ISTrackerPixel.trackers !== 'undefined';
+  }
+  return false;
 }
 
 if (!trackerInited()) {
