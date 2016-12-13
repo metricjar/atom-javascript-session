@@ -27,4 +27,11 @@ gulp.task('pixel', function () {
     .pipe(gulp.dest('dist/'))
 });
 
-gulp.task('default', ['session','pixel'], function () {});
+
+gulp.task('track', function () {
+  return gulp.src(['atom-session-sdk/src/track.html'])
+    .pipe(gulp.dest('dist/'))
+});
+
+
+gulp.task('default', ['session','pixel', 'track'], function () {});

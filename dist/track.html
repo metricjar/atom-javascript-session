@@ -18,9 +18,9 @@
 
     var options = {
         endpoint: "https://track.atom-data.io/",
-        flushInterval: 30,
-        bulkLen: 20,
-        bulkSize: 40,
+        flushInterval: 1,
+        bulkLen: 1,
+        bulkSize: 1,
         sessionLifeTime: 1800000,
         debug: true
     };
@@ -29,7 +29,5 @@
     var data = getParameterByName("data");
     var stream = getParameterByName("stream");
     session.track(stream, data);
-
-    session.flush();
 </script>
 </html>

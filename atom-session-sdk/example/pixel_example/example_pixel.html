@@ -25,9 +25,9 @@
          ISTrackerPixel('create', URL/track.html, TRACKER_ALIAS)
          */
 
-        ISTrackerPixel('create', 'http://example-url.com:1111/track.html', 'tracker1');
-        ISTrackerPixel('create', 'http://example-url.com:2222/track.html', 'tracker2');
-        ISTrackerPixel('create', 'http://example-url.com:3333/track.html', 'tracker3');
+        ISTrackerPixel('create', 'http://example-url.com:8080/track.html', 'tracker1');
+        ISTrackerPixel('create', 'http://example-url.com:8080/track.html', 'tracker2');
+        ISTrackerPixel('create', 'http://example-url.com:8080/track.html', 'tracker3');
 
         /*
          To Use the created tracker:
@@ -36,16 +36,16 @@
          ISTrackerPixel('send', {"YOUR": "DATA"});
          * */
 
-        ISTrackerPixel('send', 'hi', {"2": 3});
+        ISTrackerPixel('send', 'track1', {"firstTracker": 3});
         ISTrackerPixel('use', 'tracker1');
-        ISTrackerPixel('send', 'hi', {"2": 3});
+        ISTrackerPixel('send', 'track1', {"firstTracker2": 3});
 
         ISTrackerPixel('use', 'tracker3');
-        ISTrackerPixel('send', 'hi', {"2": 3});
+        ISTrackerPixel('send', 'track3', {"thirdTracker": 3});
 
         setTimeout(function () {
             ISTrackerPixel('use', 'tracker2');
-            ISTrackerPixel('send', 'hi2222222', {"2": 3});
+            ISTrackerPixel('send', 'track2', {"secondTracker": 3});
         }, 2000);
     } catch (e) {
         console.log(e.message);

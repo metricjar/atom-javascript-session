@@ -25,7 +25,7 @@
 function Session(options) {
   this.TAG = "ISA-Session";
 
-  var SDK_VERSION = "1.1.1";
+  var SDK_VERSION = "1.1.7";
   var SDK_TYPE = "atom-js-session";
 
   // Local storage keys

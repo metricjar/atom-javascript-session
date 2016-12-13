@@ -12,7 +12,9 @@
     "jsdoc": "^3.4.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start",
+    "build": "gulp",
+    "deploy": "./deploy.sh"
   },
   "repository": {
     "type": "git",
