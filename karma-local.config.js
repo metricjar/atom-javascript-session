@@ -9,21 +9,36 @@ module.exports = function (config) {
       }
     },
     files: [
+      'atom-session-sdk/test/pixel.e2e.js',
       'dist/*.sdk.js',
       'atom-session-sdk/test/*spec.js',
-      'atom-session-sdk/test/pixel.e2e.js'
     ],
     exclude: [],
     preprocessors: {
+      'atom-session-sdk/test/*e2e.js': ['browserify'],
       'dist/*.sdk.js': ['browserify'],
-      'atom-session-sdk/test/*spec.js': ['browserify'],
-      'atom-session-sdk/test/*e2e.js': ['browserify']
-
+      'atom-session-sdk/test/*spec.js': ['browserify']
     },
     browserify: {
-      debug: true
+      debug: true,
+      transform: [
+        [
+          'browserify-istanbul',
+          {
+            instrumenterConfig: {
+              embedSource: true
+            }
+          }]
+      ]
     },
-    reporters: ['mocha'],
+    coverageReporter: {
+      reporters: [
+        {'type': 'text'},
+        {'type': 'html', dir: 'coverage'},
+        {'type': 'lcov'}
+      ]
+    },
+    reporters: ['mocha', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: 'debug',

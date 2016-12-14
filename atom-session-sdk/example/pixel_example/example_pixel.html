@@ -5,7 +5,7 @@
 <script type="application/javascript">
     "use strict";
 
-    var atomPixelScript = 'https://js-sdk.atom-data.io/session/latest/atom-pixel.sdk.min.js';
+    var atomPixelScriptUrl = 'https://js-sdk.atom-data.io/session/latest/atom-pixel.sdk.min.js';
 
     var number = Math.random() * 3000 + 1;
     var data = {
@@ -16,16 +16,17 @@
         ts: +new Date()
     };
 
-    (function (windowObject, element, elementType, scriptUrl, trackerPixelFunc, a, m) {
+    (function (windowObject, documentObject, elementType, scriptUrl, trackerPixelFunc, a, m) {
         // Save data until script loads
         windowObject[trackerPixelFunc] = windowObject[trackerPixelFunc] || function () {
                     (windowObject[trackerPixelFunc].q = windowObject[trackerPixelFunc].q || []).push(arguments);
                 };
-        a = element.createElement(elementType), m = element.getElementsByTagName(elementType)[0];
+        a = element.createElement(elementType);
+        m = element.getElementsByTagName(elementType)[0];
         a.async = 1;
         a.src = scriptUrl;
         m.parentNode.insertBefore(a, m);
-    })(window, document, 'script', atomPixelScript, 'ISTrackerPixel');
+    })(window, document, 'script', atomPixelScriptUrl, 'ISTrackerPixel');
 
     try {
 

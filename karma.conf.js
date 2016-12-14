@@ -1,7 +1,7 @@
 module.exports = function (config) {
 
   var customLaunchers = {
-    // Chrome
+    // // Chrome
     'SL_CHROME26': {base: 'SauceLabs', browserName: 'chrome', version: '26'},
     'SL_CHROME50': {base: 'SauceLabs', browserName: 'chrome', version: '54'},
     // Firefox
@@ -48,27 +48,27 @@ module.exports = function (config) {
     },
     browserify: {
       debug: true,
-      // transform: [
-      //   [
-      //     'browserify-istanbul',
-      //     {
-      //       instrumenterConfig: {
-      //         embedSource: true
-      //       }
-      //     }]
-      // ]
+      transform: [
+        [
+          'browserify-istanbul',
+          {
+            instrumenterConfig: {
+              embedSource: true
+            }
+          }]
+      ]
     },
-    // coverageReporter: {
-    //   reporters: [
-    //     {'type': 'text'},
-    //     {'type': 'html', dir: 'coverage'},
-    //     {'type': 'lcov'}
-    //   ]
-    // },
-    reporters: ['progress', 'mocha', 'saucelabs'],
+    coverageReporter: {
+      reporters: [
+        {'type': 'text'},
+        {'type': 'html', dir: 'coverage'},
+        {'type': 'lcov'}
+      ]
+    },
+    reporters: ['progress', 'mocha', 'coverage', 'saucelabs'],
     port: 9876,
     colors: true,
-    logLevel: 'info',
+    logLevel: 'debug',
     autoWatch: false,
     sauceLabs: {
       testName: 'IronSource Atom Session js',

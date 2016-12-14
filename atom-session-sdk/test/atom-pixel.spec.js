@@ -45,11 +45,19 @@ describe('Atom Pixel Class Test', function () {
     before(function () {
       TrackerPixel('create', 'http://track.to.atom/track.html', 'testTracker');
       TrackerPixel('use', 'testTracker');
-      TrackerPixel('send', 'test', {'hello': "world"});
+      TrackerPixel('send', 'testStream', {'hello': "world"});
     });
 
     it('Should create an iframe for data tracking with correct parameters', function () {
-      expect(document.getElementsByTagName("iframe")[0].src).to.equal("http://track.to.atom/track.html?stream=test&data=%7B%22hello%22%3A%22world%22%7D");
+      // element[1] since the e2e test creates an iframe also
+      var atomFrame = '';
+      var allIframes = document.getElementsByTagName("iframe");
+      for (var i = 0; i < allIframes.length; i++) {
+        if (allIframes[i].src.indexOf("testStream") > -1) {
+          atomFrame = allIframes[i].src;
+        }
+      }
+      expect(atomFrame).to.equal("http://track.to.atom/track.html?stream=testStream&data=%7B%22hello%22%3A%22world%22%7D");
     });
     after(function () {
       TrackerPixel('clear', 'testTracker');
