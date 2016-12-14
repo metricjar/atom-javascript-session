@@ -209,4 +209,11 @@ function printDebug(tag, logData, isDebug) {
     console.log(tag + ": " + logData);
   }
 }
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    Session: Session
+  };
+}
+
 }(window, document));
