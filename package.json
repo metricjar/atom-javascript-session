@@ -27,6 +27,7 @@
   },
   "scripts": {
     "test": "karma start",
+    "test-e2e": "karma start karma-e2e.config.js",
     "test-local": "karma start karma-local.config.js",
     "build": "gulp",
     "deploy": "./deploy.sh"

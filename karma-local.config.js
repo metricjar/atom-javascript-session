@@ -1,8 +1,8 @@
-module.exports = function(config) {
+module.exports = function (config) {
 
   config.set({
     basePath: '',
-    frameworks: ['mocha','browserify', 'sinon-chai'],
+    frameworks: ['mocha', 'browserify', 'sinon-chai'],
     client: {
       chai: {
         includeStack: true
@@ -10,13 +10,15 @@ module.exports = function(config) {
     },
     files: [
       'dist/*.sdk.js',
-      'atom-session-sdk/test/*spec.js'
+      'atom-session-sdk/test/*spec.js',
+      'atom-session-sdk/test/pixel.e2e.js'
     ],
-    exclude: [
-    ],
+    exclude: [],
     preprocessors: {
       'dist/*.sdk.js': ['browserify'],
-      'atom-session-sdk/test/*spec.js': ['browserify']
+      'atom-session-sdk/test/*spec.js': ['browserify'],
+      'atom-session-sdk/test/*e2e.js': ['browserify']
+
     },
     browserify: {
       debug: true
