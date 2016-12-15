@@ -11,7 +11,7 @@ module.exports = function (config) {
     'SL_SAFARI6': {base: 'SauceLabs', browserName: 'safari', platform: 'OS X 10.8', version: '6'},
     'SL_SAFARI10': {base: 'SauceLabs', browserName: 'safari', platform: 'OS X 10.11', version: '10.0'},
     // // Explorer
-    'SL_IE9': {base: 'SauceLabs', browserName: 'internet explorer', platform: 'Windows 7', version: '9'},
+    // 'SL_IE9': {base: 'SauceLabs', browserName: 'internet explorer', platform: 'Windows 7', version: '9'},
     'SL_IE10': {base: 'SauceLabs', browserName: 'internet explorer', platform: 'Windows 7', version: '10'},
     'SL_IE11': {base: 'SauceLabs', browserName: 'internet explorer', platform: 'Windows 7', version: '11'},
     // // Edge
@@ -23,7 +23,7 @@ module.exports = function (config) {
     'SL_IOS7': {base: 'SauceLabs', browserName: 'iphone', platform: 'OS X 10.9', version: '8.1'},
     'SL_IOS10': {base: 'SauceLabs', browserName: 'iphone', platform: 'iOS', version: '10.0'},
     // // Opera
-    'SL_OPERA': {base: 'SauceLabs', browserName: 'opera', platform: 'Windows 7', version: '12.12'}
+    // 'SL_OPERA': {base: 'SauceLabs', browserName: 'opera', platform: 'Windows 7', version: '12.12'}
   };
 
 
