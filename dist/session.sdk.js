@@ -122,7 +122,7 @@ Session.prototype.track = function (stream, data) {
     try {
       dataContainer = JSON.parse(data);
     } catch (e) {
-      throw new Error("Invalid JSON String - can't be converted to Object", e);
+      throw new Error("Invalid JSON String - can't be converted to Object, " + e);
     }
   }
 
@@ -209,4 +209,11 @@ function printDebug(tag, logData, isDebug) {
     console.log(tag + ": " + logData);
   }
 }
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    Session: Session
+  };
+}
+
 }(window, document));

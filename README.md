@@ -69,6 +69,16 @@ session.flush(null, function (results) { // Optional on-demand flush
 
 ## Change Log
 
+### V1.2.0
+- Added Test + E2E Test in SauceLabs
+- Changed example pixel
+- Refactored atom-pixel.js
+- Added deployment script
+- Fixed a bug in some browsers (like Android 4) in iframe.style
+
+### V1.1.7
+- Removed Pixel Cleanup (changed to display:none)
+
 ### V1.1.6
 - Fixed flush process - queue iteration errors
 - Added pixel cleanup

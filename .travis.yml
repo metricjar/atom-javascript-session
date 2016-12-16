@@ -1,0 +1,9 @@
+langulage: node_js
+script:
+- npm test
+node_js:
+- 4.6.0
+before_install:
+- npm i
+after_script:
+- cat ./coverage/Chrome*/lcov.info | ./node_modules/.bin/coveralls --verbose
