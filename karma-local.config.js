@@ -12,6 +12,7 @@ module.exports = function (config) {
       'atom-session-sdk/test/pixel.e2e.js',
       'dist/*.sdk.js',
       'atom-session-sdk/test/*spec.js',
+      'https://js-sdk.atom-data.io/1.5.0/sdk.js'
     ],
     exclude: [],
     preprocessors: {
