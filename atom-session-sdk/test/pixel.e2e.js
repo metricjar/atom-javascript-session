@@ -5,7 +5,7 @@ describe('Full E2E Test', function () {
   describe('Atom Session E2E Test', function () {
     var options;
     var data;
-    this.timeout(5000);
+    this.timeout(10000);
     before(function () {
       options = {
         endpoint: "https://track.atom-data.io/",
@@ -22,7 +22,7 @@ describe('Full E2E Test', function () {
         string_value: "" + number,
         int_value: Math.round(number),
         float_value: number,
-        ts: +new Date()
+        ts: new Date()
       };
     });
 
@@ -45,7 +45,7 @@ describe('Full E2E Test', function () {
         string_value: "" + number,
         int_value: Math.round(number),
         float_value: number,
-        ts: +new Date()
+        ts: new Date()
       };
 
       (function (windowObject, documentObject, elementType, scriptUrl, trackerPixelFunc, a, m) {

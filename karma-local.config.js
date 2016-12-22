@@ -9,10 +9,10 @@ module.exports = function (config) {
       }
     },
     files: [
+      'dist/sdk.min.js',
       'atom-session-sdk/test/pixel.e2e.js',
       'dist/*.sdk.js',
-      'atom-session-sdk/test/*spec.js',
-      'https://js-sdk.atom-data.io/1.5.0/sdk.js'
+      'atom-session-sdk/test/*spec.js'
     ],
     exclude: [],
     preprocessors: {

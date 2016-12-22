@@ -22,8 +22,6 @@ module.exports = function (config) {
     // // IOS
     'SL_IOS7': {base: 'SauceLabs', browserName: 'iphone', platform: 'OS X 10.9', version: '8.1'},
     'SL_IOS10': {base: 'SauceLabs', browserName: 'iphone', platform: 'iOS', version: '10.0'},
-    // // Opera
-    'SL_OPERA': {base: 'SauceLabs', browserName: 'opera', platform: 'Windows 7', version: '12.12'}
   };
 
 
@@ -36,7 +34,7 @@ module.exports = function (config) {
       }
     },
     files: [
-      'https://js-sdk.atom-data.io/1.5.0/sdk.js',
+      'dist/sdk.min.js',
       'dist/*.sdk.js',
       'atom-session-sdk/test/*spec.js',
       'atom-session-sdk/test/*e2e.js'
