@@ -5,29 +5,29 @@
 
 <!-- track iframe  -->
 <script type="text/javascript">
-    "use strict";
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
+  "use strict";
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
 
-    var options = {
-        endpoint: "https://track.atom-data.io/",
-        flushInterval: 1,
-        bulkLen: 1,
-        bulkSize: 1,
-        sessionLifeTime: 1800000,
-        debug: false
-    };
+  var options = {
+    endpoint: "https://track.atom-data.io/",
+    flushInterval: 1,
+    bulkLen: 1,
+    bulkSize: 1,
+    sessionLifeTime: 1800000,
+    debug: false
+  };
 
-    var session = new IronSourceAtomSession(options);
-    var data = getParameterByName("data");
-    var stream = getParameterByName("stream");
-    session.track(stream, data);
+  var session = new IronSourceAtomSession(options);
+  var data = getParameterByName("data");
+  var stream = getParameterByName("stream");
+  session.track(stream, data);
 </script>
 </html>
