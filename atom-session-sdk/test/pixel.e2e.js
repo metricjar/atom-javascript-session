@@ -33,11 +33,10 @@ describe('Full E2E Test', function () {
     });
   });
 
-
-  describe.skip('Atom Pixel E2E Test', function () {
+  describe('Atom Pixel E2E Test', function () {
     this.timeout(10000);
     before(function () {
-      var atomPixelScriptUrl = 'https://js-sdk.atom-data.io/session/test/atom-pixel.sdk.js';
+      var atomPixelScriptUrl = 'http://localhost:9876/base/dist/atom-pixel.sdk.js';
 
       var number = Math.random() * 3000 + 1;
       var data = {
@@ -64,7 +63,7 @@ describe('Full E2E Test', function () {
 
       })(window, document, 'script', atomPixelScriptUrl, 'ISTrackerPixel');
 
-      ISTrackerPixel('create', 'https://js-sdk.atom-data.io/session/test/track.html', 'testTracker');
+      ISTrackerPixel('create', 'http://localhost:9876/base/dist/track.html', 'testTracker');
       ISTrackerPixel('use', 'testTracker');
       ISTrackerPixel('send', 'sdkdev_sdkdev.public.atom_demo_events', data);
 
