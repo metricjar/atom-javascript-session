@@ -4,7 +4,7 @@
 
 /**
  * This class implements an Atom Session
- * @param {Object} options
+ * @param {Object} [options]
  * @param {String} [options.userID] - Custom User ID UUID-4
  * @param {String} [options.sessionID] - Custom Session ID UUID-4
  * @param {Number} [options.sessionLastActive] - Custom Session Last Active Time (UnixTime)
@@ -25,7 +25,7 @@
 function Session(options) {
   this.TAG = "ISA-Session";
 
-  var SDK_VERSION = "1.2.0";
+  var SDK_VERSION = "1.2.1";
   var SDK_TYPE = "atom-js-session";
 
   // Local storage keys
