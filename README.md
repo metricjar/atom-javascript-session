@@ -1,8 +1,11 @@
 # ironSource.atom SDK for JavaScript with session support
-
 [![License][license-image]][license-url]
 [![Docs][docs-image]][docs-url]
-
+[![Coverage Status][coveralls-image]][coveralls-url]
+[![Build status][travis-image]][travis-url]
+[![Sauce Build Status][sauce-badge-image]][sauce-url]
+## Browsers support
+[![Sauce Test Status][sauce-image]][sauce-url]  
 atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers (with session support).
 
 - [Signup](https://atom.ironsrc.com/#/signup)
@@ -15,7 +18,6 @@ atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com
 ## Installation
 
 ### Installation with Bower
-
 ```sh
 $ bower install --save atom-sdk-js-session
 ```
@@ -69,6 +71,11 @@ session.flush(null, function (results) { // Optional on-demand flush
 
 ## Change Log
 
+### V1.2.1
+- Added unit test to session class
+- Added E2E test to session class
+- Added Coveralls
+
 ### V1.2.0
 - Added Test + E2E Test in SauceLabs
 - Changed example pixel
@@ -116,8 +123,17 @@ You can use our [example][example-url] for sending data to Atom:
 ## License
 [MIT](LICENSE)
 
+[example-url]: atom-session-sdk/example
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: LICENSE
-[example-url]: atom-session-sdk/example
+[travis-image]: https://travis-ci.org/ironSource/atom-javascript-session.svg?branch=master
+[travis-url]: https://travis-ci.org/ironSource/atom-javascript-session
+[coveralls-image]: https://coveralls.io/repos/github/ironSource/atom-javascript-session/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/ironSource/atom-javascript-session?branch=master
 [docs-image]: https://img.shields.io/badge/docs-latest-blue.svg
 [docs-url]: https://ironsource.github.io/atom-javascript-session/
+[sauce-image]: https://saucelabs.com/browser-matrix/jacckson.svg
+[sauce-url]: https://saucelabs.com/beta/builds/d4283e62c1564c7a895523856f62b6c6
+[sauce-badge-image]: https://saucelabs.com/buildstatus/jacckso
+
+
