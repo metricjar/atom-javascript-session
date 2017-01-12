@@ -4,7 +4,7 @@
 
 /**
  * This class implements an Atom Session
- * @param {Object} options
+ * @param {Object} [options]
  * @param {String} [options.userID] - Custom User ID UUID-4
  * @param {String} [options.sessionID] - Custom Session ID UUID-4
  * @param {Number} [options.sessionLastActive] - Custom Session Last Active Time (UnixTime)
@@ -25,7 +25,7 @@
 function Session(options) {
   this.TAG = "ISA-Session";
 
-  var SDK_VERSION = "1.1.7";
+  var SDK_VERSION = "1.2.1";
   var SDK_TYPE = "atom-js-session";
 
   // Local storage keys
@@ -52,13 +52,13 @@ function Session(options) {
 
   // Set custom userID, sessionID and start time.
   if (this.userID) {
-    printDebug(this.TAG, "UserID added: " + this.userID, this.isDebug);
+    printDebug(this.TAG, "Custom UserID added: " + this.userID, this.isDebug);
     localStorage.setItem(this.STORAGE_PREFIX + this.USER_ID, this.userID);
   }
 
   if (this.sessionID) {
-    printDebug(this.TAG, "Session added: " + this.sessionID, this.isDebug);
-    printDebug(this.TAG, "Session Last Active: " + this.sessionLastActive, this.isDebug);
+    printDebug(this.TAG, "Custom Session added: " + this.sessionID, this.isDebug);
+    printDebug(this.TAG, "Custom Session last active: " + this.sessionLastActive, this.isDebug);
     localStorage.setItem(this.STORAGE_PREFIX + this.SESSION_KEY, this.sessionID);
     localStorage.setItem(this.STORAGE_PREFIX + this.SESSION_LAST_ACTIVE, this.sessionLastActive);
   }
@@ -93,28 +93,6 @@ window.IronSourceAtomSession = Session;
 Session.prototype.track = function (stream, data) {
   var self = this;
 
-  function getSessionID_() {
-    var sessionID = localStorage.getItem(self.STORAGE_PREFIX + self.SESSION_KEY);
-    var sessionLastActive = localStorage.getItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE);
-    var currentTime = Date.now();
-
-    printDebug(self.TAG, "SessionID: " + sessionID, self.isDebug);
-    printDebug(self.TAG, "SessionLastActive: " + sessionLastActive, self.isDebug);
-    printDebug(self.TAG, "SessionLifeTime:" + self.sessionLifeTime, self.isDebug);
-    if (!sessionID || (currentTime - sessionLastActive) >= self.sessionLifeTime) {
-      sessionID = generateRandomID();
-      localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_KEY, sessionID);
-      localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE, currentTime);
-
-      printDebug(self.TAG, "Session ID updated: " + sessionID, self.isDebug);
-      return sessionID;
-    }
-
-    // Update session time
-    localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE, currentTime);
-    return sessionID;
-  }
-
   var dataContainer = {};
   if ((typeof data !== 'string' && !(data instanceof String))) {
     dataContainer = data;
@@ -126,21 +104,49 @@ Session.prototype.track = function (stream, data) {
     }
   }
 
-  function getUserID_() {
-    var userID = localStorage.getItem(self.STORAGE_PREFIX + self.USER_ID);
-    if (!userID) {
-      userID = generateRandomID();
-      localStorage.setItem(self.STORAGE_PREFIX + self.USER_ID, userID);
-    }
-    printDebug(self.TAG, "UserID: " + userID, self.isDebug);
-    return userID;
-  }
-
-  dataContainer["ib_sessionid"] = getSessionID_();
-  dataContainer["ib_userid"] = getUserID_();
+  dataContainer["ib_sessionid"] = self._getSessionID();
+  dataContainer["ib_userid"] = self._getUserID();
 
   self.tracker_.track(stream, dataContainer);
 };
+
+Session.prototype._getSessionID = function () {
+  var self = this;
+  var sessionID = localStorage.getItem(self.STORAGE_PREFIX + self.SESSION_KEY);
+  var sessionLastActive = localStorage.getItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE);
+  var currentTime = Date.now();
+
+  printDebug(self.TAG, "Got SessionID from storage: " + sessionID, self.isDebug);
+  printDebug(self.TAG, "Got SessionLastActive from storage: " + sessionLastActive, self.isDebug);
+  printDebug(self.TAG, "Got SessionLifeTime from storage: " + self.sessionLifeTime, self.isDebug);
+  if (!sessionID || (currentTime - sessionLastActive) >= self.sessionLifeTime) {
+    sessionID = generateRandomID();
+    localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_KEY, sessionID);
+    localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE, currentTime);
+    printDebug(self.TAG, "Session ID updated: " + sessionID, self.isDebug);
+    printDebug(self.TAG, "Session Last Active updated: " + currentTime, self.isDebug);
+    return sessionID;
+  }
+
+  // Update session time
+  localStorage.setItem(self.STORAGE_PREFIX + self.SESSION_LAST_ACTIVE, currentTime);
+  return sessionID;
+};
+
+Session.prototype._getUserID = function () {
+  var self = this;
+  var userID = localStorage.getItem(self.STORAGE_PREFIX + self.USER_ID);
+  printDebug(self.TAG, "Got UserID from storage: " + userID, self.isDebug);
+  if (!userID) {
+    userID = generateRandomID();
+    localStorage.setItem(self.STORAGE_PREFIX + self.USER_ID, userID);
+    printDebug(self.TAG, "New UserID: " + userID, self.isDebug);
+  } else {
+    printDebug(self.TAG, "Using UserID: " + userID, self.isDebug);
+  }
+  return userID;
+};
+
 
 /**
  * Flush accumulated events to ironSource Atom Session
