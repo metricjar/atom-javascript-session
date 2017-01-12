@@ -5,7 +5,7 @@ describe('Full E2E Test', function () {
   describe('Atom Session E2E Test', function () {
     var options;
     var data;
-    this.timeout(10000);
+    this.timeout(12000);
     before(function () {
       options = {
         endpoint: "https://track.atom-data.io/",

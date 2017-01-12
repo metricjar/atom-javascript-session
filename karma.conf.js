@@ -17,7 +17,6 @@ module.exports = function (config) {
     // Edge
     'SL_EDGE': {base: 'SauceLabs', browserName: 'MicrosoftEdge', platform: 'Windows 10', version: '13.10586'},
     // Android
-    'SL_ANDROID4.0': {base: 'SauceLabs', browserName: 'android', platform: 'Linux', version: '4.0'},
     'SL_ANDROID5.1': {base: 'SauceLabs', browserName: 'android', platform: 'Linux', version: '5.1'},
     // IOS
     'SL_IOS7': {base: 'SauceLabs', browserName: 'iphone', platform: 'OS X 10.9', version: '8.1'},

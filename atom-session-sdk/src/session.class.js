@@ -104,7 +104,6 @@ Session.prototype.track = function (stream, data) {
 
   dataContainer["ib_sessionid"] = self._getSessionID();
   dataContainer["ib_userid"] = self._getUserID();
-  console.log(dataContainer);
 
   self.tracker_.track(stream, dataContainer);
 };
