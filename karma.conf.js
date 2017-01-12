@@ -3,7 +3,7 @@ module.exports = function (config) {
   var customLaunchers = {
     // Chrome
     'SL_CHROME26': {base: 'SauceLabs', browserName: 'chrome', version: '26'},
-    'SL_CHROME50': {base: 'SauceLabs', browserName: 'chrome', version: '54'},
+    'SL_CHROME55': {base: 'SauceLabs', browserName: 'chrome', platform: 'Windows 10', version: '55'},
     // Firefox
     'SL_FIREFOX4': {base: 'SauceLabs', browserName: 'firefox', version: '4'},
     'SL_FIREFOX46': {base: 'SauceLabs', browserName: 'firefox', version: '46'},
@@ -37,7 +37,6 @@ module.exports = function (config) {
       'dist/*.sdk.js',
       'atom-session-sdk/test/*spec.js',
       'atom-session-sdk/test/*e2e.js',
-      'dist/track.html',
     ],
     exclude: [],
     preprocessors: {
@@ -67,7 +66,7 @@ module.exports = function (config) {
     reporters: ['progress', 'mocha', 'coverage', 'saucelabs'],
     port: 9876,
     colors: true,
-    logLevel: 'debug',
+    logLevel: 'trace',
     autoWatch: false,
     sauceLabs: {
       testName: 'IronSource Atom Session js',
