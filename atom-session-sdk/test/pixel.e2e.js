@@ -29,7 +29,9 @@ describe('Full E2E Test', function () {
     it('Should Finish E2E Test', function (done) {
       var session = new IronSourceAtomSession(options);
       session.track("sdkdev_sdkdev.public.atom_demo_events", data);
-      setTimeout(done, 4000);
+      setTimeout(function () {
+        done();
+      }, 4000);
     });
   });
 
@@ -70,7 +72,9 @@ describe('Full E2E Test', function () {
     });
 
     it('Should Finish E2E Test', function (done) {
-      setTimeout(done, 5000);
+      setTimeout(function () {
+        done();
+      }, 5000);
     });
   });
 
