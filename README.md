@@ -1,11 +1,14 @@
 # ironSource.atom SDK for JavaScript with session support
+
 [![License][license-image]][license-url]
 [![Docs][docs-image]][docs-url]
-[![Coverage Status][coveralls-image]][coveralls-url]
 [![Build status][travis-image]][travis-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 [![Sauce Build Status][sauce-badge-image]][sauce-url]
+
 ## Browsers support
-[![Sauce Test Status][sauce-image]][sauce-url]  
+[![Sauce Test Status][sauce-image]][sauce-url]
+
 atom-javascript-session is the official [ironSource.atom](http://www.ironsrc.com/data-flow-management) SDK for Web Browsers (with session support).
 
 - [Signup](https://atom.ironsrc.com/#/signup)
@@ -30,13 +33,14 @@ $ bower install --save atom-sdk-js-session
 ```html
 To install a certain version just do:
 <script src="https://js-sdk.atom-data.io/session/{VERSION_NUMBER_HERE}/session.sdk.min.js"></script>
-OR for the latest version:
+
+For the latest version (we will always deploy the latest version there, so at your own risk):
 <script src="https://js-sdk.atom-data.io/session/latest/session.sdk.min.js"></script>
 
 For example:
-<script src="https://js-sdk.atom-data.io/session/1.1.6/session.sdk.js"></script>
+<script src="https://js-sdk.atom-data.io/session/1.2.1/session.sdk.js"></script>
 OR
-<script src="https://js-sdk.atom-data.io/session/1.1.6/session.sdk.min.js"></script>
+<script src="https://js-sdk.atom-data.io/session/1.2.1/session.sdk.min.js"></script>
 
 The CDN supports both HTTP and HTTPS
 ```
@@ -115,7 +119,6 @@ session.flush(null, function (results) { // Optional on-demand flush
     - sessionID updates in 30 min in idle (by default)
 
 ## Example
-
 You can use our [example][example-url] for sending data to Atom:
 
 ![Example Image](https://cloud.githubusercontent.com/assets/7361100/18834366/27340b48-83fe-11e6-98fb-7453848ead73.png)
@@ -133,7 +136,5 @@ You can use our [example][example-url] for sending data to Atom:
 [docs-image]: https://img.shields.io/badge/docs-latest-blue.svg
 [docs-url]: https://ironsource.github.io/atom-javascript-session/
 [sauce-image]: https://saucelabs.com/browser-matrix/jacckson.svg
-[sauce-url]: https://saucelabs.com/beta/builds/d4283e62c1564c7a895523856f62b6c6
-[sauce-badge-image]: https://saucelabs.com/buildstatus/jacckso
-
-
+[sauce-url]: https://saucelabs.com/beta/builds/b8cec8a5cec04313bb9414375e3a742b
+[sauce-badge-image]: https://saucelabs.com/buildstatus/jacckson
